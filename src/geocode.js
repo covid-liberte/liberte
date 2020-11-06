@@ -11,7 +11,7 @@ export default async function geocode(address) {
   const json = await resp.json();
 
   if (json && json.length) {
-      return {latitude: json[0].lat, longitude: json[0].lon};
+    return { latitude: json[0].lat, longitude: json[0].lon };
   }
 
   return null;

@@ -363,14 +363,15 @@ export default function Presentation() {
         >
           l'héberger sur vos propres serveurs
         </a>{" "}
-        (ce que nous conseillons). Son code source
+        (ce que nous conseillons). Son code source{" "}
         <a
           href="https://github.com/covid-liberte/liberte"
           target="_blank"
           rel="noreferrer"
         >
           est disponible sur GitHub
-        </a>.
+        </a>
+        .
       </p>
 
       <p>Elle utilise (entre autres) :</p>
@@ -378,7 +379,11 @@ export default function Presentation() {
       <ul>
         <li>
           une version modifiée du{" "}
-          <a href="https://github.com/LAB-MI/attestation-deplacement-derogatoire-q4-2020" target="_blank" rel="noreferrer">
+          <a
+            href="https://github.com/LAB-MI/attestation-deplacement-derogatoire-q4-2020"
+            target="_blank"
+            rel="noreferrer"
+          >
             code du générateur de PDF officiel
           </a>
         </li>

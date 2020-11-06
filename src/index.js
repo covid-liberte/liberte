@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'bootswatch/dist/darkly/bootstrap.min.css'
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "bootswatch/dist/darkly/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 
 if (!navigator.geolocation) {
   alert("Erreur : votre navigateur ne supporte pas la géolocalisation.");
@@ -14,7 +14,7 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

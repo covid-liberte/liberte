@@ -7,7 +7,7 @@ function getRandomInt(min, max) {
 /**
  * Génère une heure entre 20 minutes avant maintenant et 45 minutes avant.
  */
-export function generateDateSortie() {  
+export function generateDateSortie() {
   return new Date(
     new Date().getTime() - getRandomInt(20 * 60 * 1000, 45 * 60 * 1000)
   );
