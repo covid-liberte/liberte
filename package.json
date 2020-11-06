@@ -11,8 +11,6 @@
     "bootswatch": "^4.5.3",
     "formik": "^2.2.1",
     "haversine": "^1.1.1",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.5.1",
     "localforage": "^1.9.0",
     "pdf-lib": "^1.11.2",
     "pdfjs-dist": "^2.5.207",
@@ -35,16 +33,6 @@
     "workbox-routing": "^5.1.4",
     "workbox-strategies": "^5.1.4",
     "workbox-streams": "^5.1.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write"
-    ]
   },
   "scripts": {
     "start": "HTTPS=true react-scripts start",

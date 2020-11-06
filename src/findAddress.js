@@ -8,17 +8,21 @@ const findAddress = async (pos) => {
 
   let addressList;
   if (profile.adresseAuto) {
-    addressList = await getPreferredAddresses(profile)
+    addressList = await getPreferredAddresses(profile);
   } else {
     addressList = profile.addressList;
-  } 
+  }
   //console.debug("Liste des addresses", addressList);
 
   //console.debug("Position %o", pos);
 
   for (const address of addressList) {
     // On prend 100 mètres de marge, car on connaît la flexibilité légendaire de la police française
-    if (address.latitude && address.longitude && haversine(address, pos.coords, { threshold: 900, unit: "meter" })) {
+    if (
+      address.latitude &&
+      address.longitude &&
+      haversine(address, pos.coords, { threshold: 900, unit: "meter" })
+    ) {
       //console.debug("Réutilisation de l'adresse %o", address);
       //console.groupEnd();
       return address;
