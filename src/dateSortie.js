@@ -15,7 +15,5 @@ export function getHtmlDate(date) {
 }
 
 export function getHeure(date) {
-  return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
-    date.getSeconds()
-  )}`;
+  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
