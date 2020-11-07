@@ -1,18 +1,3 @@
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
-
-/**
- * Génère une heure entre 20 minutes avant maintenant et 45 minutes avant.
- */
-export function generateDateSortie() {
-  return new Date(
-    new Date().getTime() - getRandomInt(20 * 60 * 1000, 45 * 60 * 1000)
-  );
-}
-
 export function getDatePlus5mn() {
   return new Date(new Date().getTime() + 5 * 60 * 1000);
 }

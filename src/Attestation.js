@@ -1,43 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import findAddress from "./findAddress";
-import { generateDateSortie, getHeure } from "./dateSortie";
+import { getHeure } from "./dateSortie";
 import pdfBase from "./attestation-deplacement-derogatoire-q4-2020/certificate.pdf";
 import { generatePdf } from "./attestation-deplacement-derogatoire-q4-2020/pdf-util";
-import { getDefaultAddress } from "./addressList";
-import { getProfile } from "./profile";
+import { defaultProfile, getProfile } from "./profile";
 import "./attestation.css";
 
 const pdfjsURL = "pdfjs-2.5.207-dist/web/viewer.html";
 
 export default function Attestation() {
+  const history = useHistory();
   const [profile, setProfile] = useState(null);
   const [address, setAddress] = useState(null);
-  const [dateSortie, setDateSortie] = useState(generateDateSortie());
-  const [pdf, setPdf] = useState(null);
+  const [dateSortie, setDateSortie] = useState(new Date());
+  const [pdf, setPdf] = useState("about:blank");
+
+  // Initialiser les données
+  useEffect(() => {
+    (async () => {
+      const p = await getProfile();
+      if (p === defaultProfile) {
+        // Formulaire pas encore complété
+        history.push("/presentation");
+        return;
+      }
+
+      setProfile(p);
+      setAddress(p.addressList[0]);
+      if (!p.heureAuto) setDateSortie(p.objetDate);
+    })();
+  }, [history]);
 
   // Régénérer le PDF dès qu'une donnée change
   useEffect(() => {
+    if (!profile || !dateSortie || !address) return;
+
     (async () => {
-      // Afficher les données par défaut en attendant la géolocalisation
-      if (profile === null) {
-        const p = await getProfile();
-        setProfile(p);
-        if (!p.heureAuto) {
-          setDateSortie(p.objetDate);
-        }
-        return;
-      }
-
-      if (address === null) {
-        const defaultAddress = await getDefaultAddress();
-        if (defaultAddress !== null) {
-          setAddress(defaultAddress);
-        }
-
-        return;
-      }
-
       const blob = await generatePdf(
         {
           ...profile,
@@ -56,6 +55,8 @@ export default function Attestation() {
   }, [profile, address, dateSortie]);
 
   useEffect(() => {
+    if (!profile) return;
+
     // On géolocalise en permanence, et on affiche une adresse valide en fonction de la position
     const id = navigator.geolocation.watchPosition(
       async (pos) => {
@@ -65,15 +66,16 @@ export default function Attestation() {
       { enableHighAccuracy: true }
     );
     return () => navigator.geolocation.clearWatch(id);
-  }, []);
+  }, [profile]);
 
-  // On met à jour l'heure de sortie quand nécessaire
+  // Il faut 20mn maximum pour faire 1km, quand l'heure approche, on met à jour l'heure de sortie
   useEffect(() => {
     if (!profile || !profile.heureAuto) return;
 
     const timer = setTimeout(() => {
-      setDateSortie(generateDateSortie());
-    }, 15 * 60 * 1000); // Rafraîchir la date toutes les 15 minutes
+      setDateSortie(new Date());
+    }, 40 * 60 * 1000);
+
     return () => clearTimeout(timer);
   }, [profile]);
 
