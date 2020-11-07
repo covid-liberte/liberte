@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import findAddress from "./findAddress";
-import { getHeure } from "./dateSortie";
+import { getHeure, getDateMoins15mn } from "./dateSortie";
 import pdfBase from "./attestation-deplacement-derogatoire-q4-2020/certificate.pdf";
 import { generatePdf } from "./attestation-deplacement-derogatoire-q4-2020/pdf-util";
 import { defaultProfile, getProfile } from "./profile";
 import "./attestation.css";
+import useInterval from "./useInterval";
 
 const pdfjsURL = "pdfjs-2.5.207-dist/web/viewer.html";
 
@@ -13,7 +14,7 @@ export default function Attestation() {
   const history = useHistory();
   const [profile, setProfile] = useState(null);
   const [address, setAddress] = useState(null);
-  const [dateSortie, setDateSortie] = useState(new Date());
+  const [dateSortie, setDateSortie] = useState(getDateMoins15mn());
   const [pdf, setPdf] = useState("about:blank");
 
   // Initialiser les données
@@ -31,6 +32,17 @@ export default function Attestation() {
       if (!p.heureAuto) setDateSortie(p.objetDate);
     })();
   }, [history]);
+
+  // Vérifier l'heure toutes les 10mn
+  useInterval(
+    () => {
+      if (dateSortie.getTime() + 40 * 60 * 1000 < new Date().getTime()) return;
+
+      console.debug("mise à jour de la date de sortie");
+      setDateSortie(getDateMoins15mn());
+    },
+    profile && profile.heureAuto ? 10 * 60 * 1000 : null
+  );
 
   // Régénérer le PDF dès qu'une donnée change
   useEffect(() => {
@@ -57,6 +69,7 @@ export default function Attestation() {
   useEffect(() => {
     if (!profile) return;
 
+    console.debug("commencer a surveiller la position");
     // On géolocalise en permanence, et on affiche une adresse valide en fonction de la position
     const id = navigator.geolocation.watchPosition(
       async (pos) => {
@@ -68,27 +81,14 @@ export default function Attestation() {
     return () => navigator.geolocation.clearWatch(id);
   }, [profile]);
 
-  // Il faut 20mn maximum pour faire 1km, quand l'heure approche, on met à jour l'heure de sortie
-  useEffect(() => {
-    if (!profile || !profile.heureAuto) return;
-
-    const timer = setTimeout(() => {
-      setDateSortie(new Date());
-    }, 40 * 60 * 1000);
-
-    return () => clearTimeout(timer);
-  }, [profile]);
-
   return (
     <div className="App">
-      {pdf && address && (
-        <iframe
-          id="pdf"
-          title="pdf"
-          style={{ width: "100%", height: "100%" }}
-          src={pdf}
-        ></iframe>
-      )}
+      <iframe
+        id="pdf"
+        title="pdf"
+        style={{ width: "100%", height: "100%" }}
+        src={pdf}
+      ></iframe>
 
       <Link to="/form" className="btn btn-link btn-sm">
         Réglages

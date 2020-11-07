@@ -1,3 +1,7 @@
+export function getDateMoins15mn() {
+  return new Date(new Date().getTime() - 15 * 60 * 1000);
+}
+
 export function getDatePlus5mn() {
   return new Date(new Date().getTime() + 5 * 60 * 1000);
 }
@@ -11,5 +15,7 @@ export function getHtmlDate(date) {
 }
 
 export function getHeure(date) {
-  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
+    date.getSeconds()
+  )}`;
 }
