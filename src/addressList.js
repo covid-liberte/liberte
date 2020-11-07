@@ -1,5 +1,4 @@
 import localforage from "localforage";
-import { getProfile } from "./profile";
 
 let addressList = null;
 
@@ -32,23 +31,6 @@ export async function getPreferredAddresses(profile) {
   list.push(...(await getAddressList()));
 
   return list;
-}
-
-export async function getDefaultAddress() {
-  const profile = await getProfile();
-  if (profile.addressList.length) {
-    // Préférer une vraie adresse si disponible
-    return profile.addressList[0];
-  }
-
-  const al = await getAddressList();
-  if (al.length) {
-    // Sinon une adresse déjà utilisée
-    return al[0];
-  }
-
-  // Pas encore d'adresse
-  return null;
 }
 
 export async function addAddress(address) {

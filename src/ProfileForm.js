@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import localforage from "localforage";
 import formData from "./attestation-deplacement-derogatoire-q4-2020/form-data.json";
 import {
   defaultProfile,
@@ -65,7 +66,7 @@ export default function ProfileForm() {
           profile.datesortie = profile.objetDate.toLocaleDateString("fr-fr");
 
           await updateProfile(values);
-          history.push("/attestation");
+          history.push("/");
           setSubmitting(false);
         }}
       >
@@ -253,19 +254,30 @@ export default function ProfileForm() {
 
             <hr />
 
+            <Link to="/" className="btn btn-info btn-block">
+              Infos
+            </Link>
             <button
               type="button"
               className="btn btn-warning btn-block"
-              onClick={() => {
-                clear();
+              onClick={async () => {
+                await clear();
                 alert("Historique effacé.");
               }}
             >
               Effacer l'historique des adresses générées
             </button>
-            <Link to="/" className="btn btn-info btn-block">
-              Infos
-            </Link>
+            <button
+              type="button"
+              className="btn btn-danger btn-block"
+              onClick={async () => {
+                await localforage.clear();
+                alert("Données effacées.");
+                history.push("/presentation");
+              }}
+            >
+              Effacer toutes les données stockées sur cet appareil
+            </button>
           </Form>
         )}
       </Formik>

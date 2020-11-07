@@ -1,7 +1,7 @@
 {
   "short_name": "Liberté !",
   "name": "L'attestation COVID magique qui restaure vos libertés fondamentales.",
-  "categories": ["government", "health"],
+  "categories": ["government", "navigation"],
   "lang": "fr-FR",
   "icons": [
     {
@@ -36,7 +36,7 @@
     }
   ],
   "start_url": ".",
-  "display": "minimal-ui",
+  "display": "standalone",
   "theme_color": "#ced4da",
   "background_color": "#000191",
   "orientation": "portrait-primary"

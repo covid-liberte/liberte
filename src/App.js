@@ -10,13 +10,13 @@ export default function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Presentation />
+            <Attestation />
           </Route>
           <Route exact path="/form">
             <ProfileForm />
           </Route>
-          <Route exact path="/attestation">
-            <Attestation />
+          <Route exact path="/presentation">
+            <Presentation />
           </Route>
         </Switch>
       </Router>
