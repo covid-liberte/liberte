@@ -165,8 +165,9 @@ export default function Presentation() {
             target="_blank"
             rel="noreferrer"
           >
-            Respectez les gestes barrières ;
+            Ne faites pas comme Macron
           </a>
+          , respectez les gestes barrières ;
         </li>
         <li>
           <a
@@ -174,8 +175,9 @@ export default function Presentation() {
             target="_blank"
             rel="noreferrer"
           >
-            Portez un masque ;
+            Ne faites pas comme Blanquer
           </a>
+          , portez un masque ;
         </li>
         <li>
           <a
@@ -183,9 +185,10 @@ export default function Presentation() {
             target="_blank"
             rel="noreferrer"
           >
-            Évitez les contacts proches (gardez au moins 6 pas de distance entre
-            chaque personne) ;
+            Ne faites vraiment pas comme Macron
           </a>
+          , évitez les contacts proches (gardez au moins 6 pas de distance entre
+          chaque personne) ;
         </li>
         <li>
           <a
@@ -193,8 +196,9 @@ export default function Presentation() {
             target="_blank"
             rel="noreferrer"
           >
-            Privilégiez les rencontres en extérieur (sic) ;
+            Ne faites pas comme Bayrou et Castex
           </a>
+          , privilégiez les rencontres en extérieur (sic) ;
         </li>
         <li>Si ce n'est pas possible, aérez les pièces ;</li>
         <li>
@@ -203,9 +207,9 @@ export default function Presentation() {
             target="_blank"
             rel="noreferrer"
           >
-            Et surtout ne prenez pas exemple sur la police, n'organisez pas de
-            COVID-parties.
+            Et surtout ne prenez pas exemple sur la police
           </a>
+          , n'organisez pas de COVID-parties.
         </li>
       </ul>
 
@@ -217,7 +221,7 @@ export default function Presentation() {
       <ul>
         <li>
           Se promener dans la nature même si l'on habite à plus d'1 kilomètre
-          d'un parc ou d'une fôret, ou que l'on ne dispose pas ;
+          d'un parc ou d'une fôret, ou que l'on ne dispose pas{" "}
           <a
             href="https://www.franceinter.fr/emissions/la-main-verte/la-main-verte-07-mai-2017"
             target="_blank"
@@ -244,8 +248,9 @@ export default function Presentation() {
             target="_blank"
             rel="noreferrer"
           >
-            Aller soutenir ceux qui luttent ;
-          </a>
+            Aller soutenir ceux qui luttent
+          </a>{" "}
+          ;
         </li>
         <li>
           Participer aux réunions (désormais interdites) de son groupe
@@ -259,8 +264,9 @@ export default function Presentation() {
             target="_blank"
             rel="noreferrer"
           >
-            ses collègues de boulot.
+            ses collègues de boulot
           </a>
+          .
         </li>
       </ul>
 
