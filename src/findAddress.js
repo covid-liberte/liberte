@@ -16,52 +16,67 @@ const findAddress = async (pos) => {
 
   //console.debug("Position %o", pos);
 
+  let adressePlusProche = null;
+  let distanceAdressePlusProche = null;
   for (const address of addressList) {
+    // Adresse non-géocodée
+    if (!address.latitude || !address.longitude) continue;
+
+    const distance = haversine(address, pos.coords, { unit: "meter" });
     // On prend 100 mètres de marge, car on connaît la flexibilité légendaire de la police française
-    if (
-      address.latitude &&
-      address.longitude &&
-      haversine(address, pos.coords, { threshold: 900, unit: "meter" })
-    ) {
+    if (distance <= 900) {
       //console.debug("Réutilisation de l'adresse %o", address);
       //console.groupEnd();
       return address;
     }
+
+    if (adressePlusProche === null || distance < distanceAdressePlusProche) {
+      adressePlusProche = address;
+      distanceAdressePlusProche = distance;
+    }
   }
 
-  if (!profile.adresseAuto && addressList.length) {
-    return addressList[0];
-  }
+  if (!profile.adresseAuto && adressePlusProche) return adressePlusProche;
 
-  const resp = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`
+  const url = new URL(process.env.REACT_APP_OVERPASS_API);
+  url.searchParams.append(
+    "data",
+    `[out:json];
+  node(around:900,50.622318196221,3.0441414536924)["addr:housenumber"]["addr:street"]["addr:city"]["addr:postcode"];
+  out 5;`
   );
-  const json = await resp.json();
 
-  const address = {
-    address: "",
-    zipcode: json.address.postcode || "",
-    city: json.address.city || "",
-    latitude: pos.coords.latitude,
-    longitude: pos.coords.longitude,
-  };
+  try {
+    const resp = await fetch(url);
+    const json = await resp.json();
 
-  //console.debug("Création d'une nouvelle adresse %o", json);
-  //console.groupEnd();
+    // Pas d'adresse à moins de 900m à la ronde... on prend l'adresse existante la plus proche en espérant que le flic (ou plus probablement le gendarme dans le cas présent) soit compréhensif.
+    if (!json.elements.length) return adressePlusProche;
 
-  if (!json.address.house_number && json.address.building)
-    // On ne fait pas apparaître le nom du bâtiment si le numéro de la rue est disponible
-    address.address = `${json.address.building} `;
+    // On prend une adresse sur les 5 au hasard, pour que ce ne soit pas toujours les mêmes adresses qui sortent
+    const element =
+      json.elements[Math.floor(Math.random() * json.elements.length)];
 
-  const composantsRue = [];
-  if (json.address.house_number) composantsRue.push(json.address.house_number);
-  if (json.address.road) composantsRue.push(json.address.road);
+    const address = {
+      address: `${element.tags["addr:housenumber"]} ${element.tags["addr:street"]}`,
+      zipcode: element.tags["addr:postcode"],
+      city: element.tags["addr:city"],
+      latitude: element.lat,
+      longitude: element.lon,
+    };
 
-  if (composantsRue.length) address.address += composantsRue.join(" ");
+    //console.debug("Création d'une nouvelle adresse %o", address);
+    //console.groupEnd();
 
-  addAddress(address);
+    addAddress(address);
 
-  return address;
+    return address;
+  } catch (e) {
+    // En cas de problème (ex : API en rade), on renvoie l'adresse en stock la plus proche
+    console.error(e);
+
+    return adressePlusProche;
+  }
 };
 
 export default findAddress;

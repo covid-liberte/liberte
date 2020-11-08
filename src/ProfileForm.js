@@ -255,7 +255,7 @@ export default function ProfileForm() {
 
             <hr />
 
-            <Link to="/" className="btn btn-info btn-block">
+            <Link to="/presentation" className="btn btn-info btn-block">
               Infos
             </Link>
             <button

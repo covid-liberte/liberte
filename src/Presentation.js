@@ -75,8 +75,8 @@ export default function Presentation() {
         <li>
           Vous pouvez antidater la date de sortie et le QR code ne vous
           mouchardera pas (le QR code l'attestation officielle contient sa date
-          de création, qui n'apparaît nulle part en clair... la délation, cette
-          tradition française).
+          de création, qui n'apparaît nulle part en clair sur le PDF... la
+          délation, cette tradition française).
         </li>
       </ul>
 
@@ -233,7 +233,7 @@ export default function Presentation() {
             target="_blank"
             rel="noreferrer"
           >
-            Faire un footing sans tourner en rond autour de son lotissement
+            Faire un footing sans tourner en rond autour de son lotissement,
             comme le ministre de l'intérieur
           </a>{" "}
           ;
@@ -273,28 +273,6 @@ export default function Presentation() {
       </p>
 
       <p>
-        Pour trouver des adresses proches, votre position est envoyée au serveur
-        de{" "}
-        <a
-          href="https://www.openstreetmap.org"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Open Street Map
-        </a>{" "}
-        , un projet de cartographie libre et collaboratif (voir{" "}
-        <a
-          href="https://wiki.osmfoundation.org/wiki/Privacy_Policy"
-          target="_blank"
-          rel="noreferrer"
-        >
-          leur politique de confidentialité
-        </a>
-        ) . Les positions de adresses renseignées sont elles aussi trouvées en
-        utilisant le serveur de Open Street Map.
-      </p>
-
-      <p>
         L'hébergeur de l'application (par défaut{" "}
         <a
           href="https://vercel.com/legal/privacy-policy"
@@ -311,7 +289,7 @@ export default function Presentation() {
         >
           politique de confidentialité
         </a>
-        ) a accès a votre{" "}
+        ) a accès à votre{" "}
         <a
           href="https://fr.wikipedia.org/wiki/Adresse_IP"
           target="_blank"
@@ -320,18 +298,58 @@ export default function Presentation() {
           adresse IP
         </a>
         , mais pas aux données saisies dans le formulaire ni à votre position.
-        Vous pouvez aussi héberger vous même l'application, qui est un logiciel
-        libre (voir le point suivant).
+      </p>
+
+      <p>
+        Pour trouver des adresses proches, <i>Liberté !</i> utilise les données
+        de{" "}
+        <a
+          href="https://www.openstreetmap.org"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open Street Map
+        </a>{" "}
+        , un projet de cartographie libre et collaboratif. Votre position est
+        envoyée au serveur{" "}
+        <a href="https://overpass-api.de" target="_blank" rel="noreferrer">
+          overpass-api.de
+        </a>
+        . Les positions des adresses renseignées sont trouvées via l'API
+        Nominatim exposée par le projet Open Street Map lui même (voir{" "}
+        <a
+          href="https://wiki.osmfoundation.org/wiki/Privacy_Policy"
+          target="_blank"
+          rel="noreferrer"
+        >
+          leur politique de confidentialité
+        </a>
+        ).
       </p>
 
       <p>
         Pour vous garantir un anonymat maximal, nous vous conseillons d'utiliser{" "}
+        <a href="https://protonvpn.com" target="_blank" rel="noreferrer">
+          un VPN sérieux
+        </a>
+        ou
         <a href="https://www.torproject.org" target="_blank" rel="noreferrer">
           Tor
         </a>
-        , ou un{" "}
-        <a href="https://protonvpn.com" target="_blank" rel="noreferrer">
-          VPN
+        .
+      </p>
+
+      <p>
+        Pour une sécurité maximale, nous vous conseillons d'héberger vous même
+        l'application (qui est un logiciel libre) ainsi que les API fournissant
+        les données d'Open Street Map (voir le point suivant), et tant qu'à
+        faire via{" "}
+        <a
+          href="https://community.torproject.org/onion-services/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          un service Onion
         </a>
         .
       </p>
@@ -357,7 +375,7 @@ export default function Presentation() {
         </a>
         . Vous pouvez l'étudier, le modifier, le redistribuer et{" "}
         <a
-          href="https://create-react-app.dev/docs/deployment"
+          href="https://github.com/covid-liberte/liberte#déployer-sa-propre-instance"
           target="_blank"
           rel="noreferrer"
         >
@@ -377,6 +395,16 @@ export default function Presentation() {
       <p>Elle utilise (entre autres) :</p>
 
       <ul>
+        <li>
+          les données et API du projet{" "}
+          <a
+            href="https://www.openstreetmap.org"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open Street Map
+          </a>
+        </li>
         <li>
           une version modifiée du{" "}
           <a

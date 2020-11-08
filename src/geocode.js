@@ -1,7 +1,6 @@
 export default async function geocode(address) {
-  const url = new URL(
-    "https://nominatim.openstreetmap.org/search?format=jsonv2"
-  );
+  const url = new URL(process.env.REACT_APP_NOMINATIM_API);
+  url.searchParams.set("format", "jsonv2");
   url.searchParams.set("street", address.address);
   url.searchParams.set("city", address.city);
   url.searchParams.set("postalcode", address.zipcode);
