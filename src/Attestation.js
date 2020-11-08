@@ -36,12 +36,17 @@ export default function Attestation() {
   // Vérifier l'heure toutes les 10mn
   useInterval(
     () => {
-      if (dateSortie.getTime() + 40 * 60 * 1000 < new Date().getTime()) return;
-
-      console.debug("mise à jour de la date de sortie");
-      setDateSortie(getDateMoins15mn());
+      if (new Date().getTime() >= dateSortie.getTime() + 40 * 60 * 1000) {
+        const nouvelleDateSortie = getDateMoins15mn();
+        console.debug(
+          "mise à jour de la date de sortie %o",
+          nouvelleDateSortie
+        );
+        setDateSortie(nouvelleDateSortie);
+      }
     },
-    profile && profile.heureAuto ? 10 * 60 * 1000 : null
+    // On vérifie toutes les secondes car les timers sont mis en pause quand la page n'est pas active
+    profile && profile.heureAuto ? 1000 : null
   );
 
   // Régénérer le PDF dès qu'une donnée change

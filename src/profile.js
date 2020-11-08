@@ -55,3 +55,12 @@ export function cloneProfile(profile) {
 
   return clonedProfile;
 }
+
+export async function clearProfile() {
+  profile = null;
+  try {
+    return localforage.removeItem("profile");
+  } catch (e) {
+    console.error(e);
+  }
+}

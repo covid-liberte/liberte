@@ -42,8 +42,8 @@ export async function addAddress(address) {
   }
 }
 
-export async function clear() {
-  addressList = [];
+export async function clearAddressList() {
+  addressList = null;
   try {
     return localforage.removeItem("address_list");
   } catch (e) {

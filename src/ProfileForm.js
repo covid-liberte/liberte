@@ -8,8 +8,9 @@ import {
   getProfile,
   cloneProfile,
   updateProfile,
+  clearProfile,
 } from "./profile";
-import { defaultAddress, isFilled, clear } from "./addressList";
+import { defaultAddress, isFilled, clearAddressList } from "./addressList";
 import geocode from "./geocode";
 
 const fieldList = formData.flat();
@@ -261,7 +262,7 @@ export default function ProfileForm() {
               type="button"
               className="btn btn-warning btn-block"
               onClick={async () => {
-                await clear();
+                await clearAddressList();
                 alert("Historique effacé.");
               }}
             >
@@ -271,7 +272,11 @@ export default function ProfileForm() {
               type="button"
               className="btn btn-danger btn-block"
               onClick={async () => {
-                await localforage.clear();
+                await Promise.all([
+                  clearProfile(),
+                  clearAddressList(),
+                  localforage.clear(),
+                ]);
                 alert("Données effacées.");
                 history.push("/presentation");
               }}
